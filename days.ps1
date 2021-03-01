@@ -5,7 +5,8 @@
     [int]$sPos = $(throw "-sPos = slide position")
 )
 
-. ".\functions.ps1"
+. ".\gen-functions.ps1"
+. ".\style-functions.ps1"
 
 [int]$d, [int]$mIdx, [int]$y = Get-fDay $day $mth $year
 $day_idx = ( Get-Date -Year $y -Month $mIdx -Day $d ).DayOfWeek.value__
