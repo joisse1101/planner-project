@@ -82,6 +82,7 @@ while ($y -le $year) {
                 ## Mark holiday
                 $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.75 * $cm, 0.5 * $cm)
                 use-BodyText $box
+                $box.TextFrame.TextRange.Font.Bold = 0
                 $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
                 $box.TextFrame.VerticalAnchor = 3 # align middle
                 $box.Fill.BackColor.ObjectThemeColor = 6
