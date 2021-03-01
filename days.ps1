@@ -115,6 +115,7 @@ while ($y -le $year) {
 
         ## Increment Y-M-D
         $d, $mIdx, $y = AddDMY $d $mIdx $y 1
+        $m = $months[$mIdx - 1]
         $day_idx = ($day_idx + 1) % 7
     }
 
