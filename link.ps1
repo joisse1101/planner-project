@@ -4,7 +4,7 @@ param (
     [int]$day = $(throw "-day is required.")
 )
 
-. ".\functions.ps1"
+. ".\gen-functions.ps1"
 
 $firsts = New-Object System.Collections.Generic.List[Object]
 foreach ($p in $prefixes) {
