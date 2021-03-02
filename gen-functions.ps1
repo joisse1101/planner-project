@@ -34,27 +34,29 @@ function Get-fDay {
     return [int]$d, [int]$m, [int]$y
 }
 
-## [[int]holIdx] Get-holIdx $d $m $y $hols
+## [[int]holIdx [List<Object>]currHols] Get-holIdx $d $m $y $hols
 function Get-holIdx {
     param([int]$d, [int]$m, [int]$y, $hols)
-    $holIdx = 0
-    while (($y -ge [int]$hols[$holIdx].Y)) { 
-        if ($y -gt [int]$hols[$holIdx].Y) {
-            $holIdx++
+    [string]$date = [string]$y + "-" + [string]$m + "-" + [string]$d
+
+    $currHols = New-Object System.Collections.Generic.List[Object]
+    foreach ($h in $hols) {
+        [string]$hol = $h.Y + "-" + $h.M + "-" + $h.D
+        $diff = (New-TimeSpan -Start $hol -End $date).Days
+        if ($diff -le 0) {
+            ## $hol starts on or after day
+            return $holIdx, $currHols
         }
-        elseif ($y -eq [int]$hols[$holIdx].Y) {
-            if ($m -gt [int]$hols[$holIdx].M) {
-                $holIdx++
+        else {
+            $hTime = $h.Days * $h.Repeat
+            if ($diff -gt $hTime) {
+                ## add to currHols
+                $days = [Math]::Floor( ($hTime - $diff) / $h.Repeat)
+                $timer = ($hTime - $diff) - ($days * $h.Repeat) + 1
+                $currHols.Add( ($h.Name, $days, $timer, $h.Repeat, $holIdx) )
             }
-            elseif ($m -eq [int]$hols[$holIdx].M) {
-                if ($d -gt [int]$hols[$holIdx].D) {
-                    $holIdx++
-                }
-                else { break }
-            }
-            else { break }
         }
-        else { break }
+        $holIdx++
     }
-    return $holIdx
+    return $holIdx, $currHols
 }
