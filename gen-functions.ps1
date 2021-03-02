@@ -38,7 +38,7 @@ function Get-fDay {
 function Get-holIdx {
     param([int]$d, [int]$m, [int]$y, $hols)
     [string]$date = [string]$y + "-" + [string]$m + "-" + [string]$d
-
+    $holIdx = 0
     $currHols = New-Object System.Collections.Generic.List[Object]
     foreach ($h in $hols) {
         [string]$hol = $h.Y + "-" + $h.M + "-" + $h.D
@@ -48,12 +48,18 @@ function Get-holIdx {
             return $holIdx, $currHols
         }
         else {
-            $hTime = $h.Days * $h.Repeat
-            if ($diff -gt $hTime) {
+            $hTime = [int]$h.Days * [int]$h.Repeat
+            if ($diff -lt $hTime) {
                 ## add to currHols
                 $days = [Math]::Floor( ($hTime - $diff) / $h.Repeat)
                 $timer = ($hTime - $diff) - ($days * $h.Repeat) + 1
-                $currHols.Add( ($h.Name, $days, $timer, $h.Repeat, $holIdx) )
+                if ($h.Name -eq "Lent") {
+                    $lDay, $lMth, $lYear = Get-fSunday $h.D $h.M $h.Y
+                    [string]$lDate = [string]$lYear + "-" + [string]$lMth + "-" + [string]$lDay
+                    $numSundays = [Math]::Floor( (New-TimeSpan -Start $lDate -End $date).Days / 7 )
+                    $days = $days + $numSundays
+                }
+                $currHols.Add( ($h.Name, $days, $timer, $h.Days, $h.Repeat) )
             }
         }
         $holIdx++
