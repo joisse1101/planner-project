@@ -130,3 +130,33 @@ function use-wkTrackerLabel {
     $box.Line.Weight = 1
     $box.Line.ForeColor.ObjectThemeColor = 6
 }
+
+function use-dayLabel {
+    param ($box)
+    use-BodyText $box
+    $box.TextFrame.MarginLeft = 0
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 1 # align left
+    $box.TextFrame.VerticalAnchor = 3 # align middle
+}
+
+function use-dayTypeLabel {
+    param($box, $title)
+    use-TitleText $box $title
+    $box.Height = 0.75 * $cm
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 3 # align right
+    $box.TextFrame.VerticalAnchor = 1 # align top 
+}
+
+function use-dayHolLabel {
+    param($box)
+    use-BodyText $box
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
+    $box.TextFrame.VerticalAnchor = 3 # align middle
+    $box.Fill.BackColor.ObjectThemeColor = 7
+    $box.Fill.BackColor.Brightness = 0.6
+    $box.Line.Visible = 1
+    $box.Line.Weight = 1
+    $box.Line.ForeColor.ObjectThemeColor = 7
+    $box.Line.ForeColor.Brightness = 0.6
+    $box.ZOrder(1)
+}
