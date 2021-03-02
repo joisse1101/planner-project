@@ -91,3 +91,42 @@ function use-mthHolLabel {
     $box.Line.ForeColor.ObjectThemeColor = 5
     $box.Line.ForeColor.Brightness = 0.6
 }
+
+function use-wkDayLabel {
+    param($box, $title)
+    use-titleText $box $title
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 1 # align left
+    $box.TextFrame.VerticalAnchor = 3 # align middle
+}
+
+function use-wkDateLabel {
+    param($box, $title)
+    use-titleText $box $title
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 3 # align right
+    $box.TextFrame.VerticalAnchor = 3 # align middle
+}
+
+function use-wkHolLabel {
+    param($box)
+    use-BodyText $box
+    $box.TextFrame.TextRange.Font.Bold = 0
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
+    $box.TextFrame.VerticalAnchor = 3 # align middle
+    $box.Fill.Solid()
+    $box.Fill.ForeColor.ObjectThemeColor = 6
+    $box.Fill.ForeColor.Brightness = 0.6
+}
+
+function use-wkTrackerLabel {
+    param($box)
+    use-BodyText $box
+    $box.Height = 0.75 * $cm
+    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
+    $box.TextFrame.VerticalAnchor = 3 # align middle
+    $box.Fill.Solid()
+    $box.Fill.ForeColor.ObjectThemeColor = 6
+    $box.Fill.ForeColor.Brightness = 0.6
+    $box.Line.Visible = 1
+    $box.Line.Weight = 1
+    $box.Line.ForeColor.ObjectThemeColor = 6
+}

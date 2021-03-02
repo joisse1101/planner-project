@@ -12,6 +12,8 @@ $d, $mIdx, $y = Get-fSunday $day $mth $year
 $miniCal = $templates.week
 $labels = $divs[0], $divs[1], $divs[3], $divs[4]
 
+$holIdx, $currHols = Get-holIdx $d $mIdx $y $hols
+
 $num = 0
 while ($y -le $year) {
     $numDays = [DateTime]::DaysInMonth($y, $mIdx)
@@ -50,23 +52,18 @@ while ($y -le $year) {
 
         ## Insert day names
         $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 4 * $cm, 0.5 * $cm)
-        use-titleText $box $title
-        $box.TextFrame.TextRange.ParagraphFormat.Alignment = 1 # align left
-        $box.TextFrame.VerticalAnchor = 3 # align middle
+        use-wkDayLabel $box $title
         $box.TextFrame.TextRange.Text = [string]$days[$i]
         $box.Name = "day_" + [string]$days[$i]
 
         ## Insert dates
         $box = $slide.Shapes.AddTextbox(1, $nLeft + 6.25 * $cm, $nTop, 2.5 * $cm, 0.5 * $cm)
-        use-titleText $box $title
-        $box.TextFrame.TextRange.ParagraphFormat.Alignment = 1 # align left
-        $box.TextFrame.VerticalAnchor = 3 # align middle
+        use-wkDateLabel $box $title
         $box.TextFrame.TextRange.Text = [string]$d + $m.Substring(0,3)
         $box.Name = "date_" + [string]$d + $m
 
         ## Insert holiday
         # Add holidays to queue
-        $holIdx = Get-holIdx $d $mIdx $y $hols
         while (($y -eq [int]$hols[$holIdx].Y) -and ($mIdx -eq [int]$hols[$holIdx].M) -and ($d -eq [int]$hols[$holIdx].D)) {
             $currHols.Add(($hols[$holIdx].Name, $hols[$holIdx].Days, 1, $hols[$holIdx].Days, $hols[$holIdx].Repeat))
             $holIdx++
@@ -81,12 +78,7 @@ while ($y -le $year) {
             if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                 ## Mark holiday
                 $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.75 * $cm, 0.5 * $cm)
-                use-BodyText $box
-                $box.TextFrame.TextRange.Font.Bold = 0
-                $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
-                $box.TextFrame.VerticalAnchor = 3 # align middle
-                $box.Fill.BackColor.ObjectThemeColor = 6
-                $box.Fill.BackColor.Brightness = 0.6
+                use-wkHolLabel $box
                 $box.TextFrame.TextRange.Text = $hol[0].ToUpper()
                 $box.Name = "hol_" + $hol[0].ToUpper()
                 if ($hol[3] -gt 1) { [void] $box.TextFrame.TextRange.InsertAfter( " " + "D-" + [string]([int]$hol[3] - [int]$hol[1] + 1)) }
@@ -121,16 +113,7 @@ while ($y -le $year) {
     $nLeft = $title.Left + 9.25 * $cm
 
     $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 8.75 * $cm, 0.75 * $cm)
-    use-BodyText $box
-    $box.Height = 0.75 * $cm
-    $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
-    $box.TextFrame.VerticalAnchor = 3 # align middle
-    $box.Fill.BackColor.ObjectThemeColor = 6
-    $box.Fill.BackColor.Brightness = 0.6
-    $box.Line.Visible = 1
-    $box.Line.Weight = 1
-    $box.Line.ForeColor.ObjectThemeColor = 6
-
+    use-wkTrackerLabel $box
     $box.TextFrame.TextRange.Text = "Habit Tracker"
     $box.Name = "habit_title"
 
