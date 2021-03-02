@@ -70,6 +70,7 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
             }
             if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                 ## Mark holiday
+                
                 $box = $slide.Shapes.AddTextbox(1, $lefts[$day_idx], $hTop , 2.5 * $cm, 0.5 * $cm)
                 $box.TextFrame.AutoSize = 0                
                 use-mthHolLabel $box                
@@ -111,15 +112,15 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
         $nLeft = $nLeft + 5.6 * $cm + $div
     }
 
-    $y = $year        
+    $yCal = $y
     for ($n = ($mIdx + 1); $n -le ($mIdx + $cals); $n++) {
-        if ($n -eq 13) { $y++ }
-        $miniCal.Shapes("mini_" + $months[($n - 1) % 12] + "_" + $y).Copy()
+        if ($n -eq 13) { $yCal++ }
+        $miniCal.Shapes("mini_" + $months[($n - 1) % 12] + "_" + $yCal).Copy()
         $box = $slide.Shapes.Paste()
         $box.Top = $nTop
         [double]$box.Left = [double]$nLeft
 
-        $miniCal.Shapes("mini_" + $months[($n - 1) % 12] + "_" + $y + "_cal").Copy()
+        $miniCal.Shapes("mini_" + $months[($n - 1) % 12] + "_" + $yCal + "_cal").Copy()
         $cal = $slide.Shapes.Paste()
         $cal.Top = $nTop + $box.Height
         [double]$cal.Left = [double]$nLeft
