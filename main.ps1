@@ -41,7 +41,9 @@ $templates = $templates + @{ week = $presentation.Slides("templates_miniCal_week
 
 ## Clear templates
 $templates.month.delete()
+$templates.Remove('month')
 $templates.week.delete()
+$templates.Remove('week')
 while (1) {
     try { $templates.templates.Shapes[2].delete() }
     catch { break }
