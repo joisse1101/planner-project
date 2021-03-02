@@ -30,6 +30,7 @@ $templates = $templates + @{ month = $presentation.Slides("templates_miniCal_mon
 $templates = $templates + @{ week = $presentation.Slides("templates_miniCal_week") }
 
 .\year.ps1 -year:$year -sName:("yr_" + $year) -sPos:($presentation.Slides.Count - $templates.Count + 1) -type:"year" -div
+.\year.ps1 -year:($year+1) -sName:("yr_" + ($year+1)) -sPos:($presentation.Slides.Count - $templates.Count + 1) -type:"year" -div
 .\month.ps1 -year:$year -mth:$mth -sPos:($presentation.Slides.Count - $templates.Count + 1)
 .\week.ps1 -year:$year -mth:$mth -day:$day -sPos:($presentation.Slides.Count - $templates.Count + 1)
 .\days.ps1 -year:$year -mth:$mth -day:$day -sPos:($presentation.Slides.Count - $templates.Count + 1)
