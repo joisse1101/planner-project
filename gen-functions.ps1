@@ -67,7 +67,7 @@ function Get-holIdx {
     return $holIdx, $currHols
 }
 
-Add-divs {
+function Add-divs {
     param($slide, $title, $labels)
     $nTop = 0.35 * $cm
     $nLeft = 20 * $cm
@@ -78,5 +78,4 @@ Add-divs {
         $box.Name = "div_" + $l
         $nTop = $nTop + $box.Height
     }
-
 }
