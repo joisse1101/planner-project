@@ -32,17 +32,29 @@ function use-DivText {
 
 }
 
-function label-miniCalTitle {
+## [void] use-miniCalTitle $box $m $y        
+function use-miniCalTitle {
     param($box, $m, $y)
+    use-BodyText $box
     $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
     $box.TextFrame.VerticalAnchor = 3 # align middle
     $box.TextFrame.TextRange.Text = [string]$m.ToUpper()
     $box.Name = "mini_" + $m + "_" + $y
 }
 
-function label-miniCal {
+## [void] use-miniCal $box $m $y $cal
+function use-miniCal {
     param($box, $m, $y, $cal)
     $cal.Name = "mini_" + $m + "_" + $y + "_cal"
     $cal.Left = $box.Left
     $cal.Top = $box.Top + $box.Height
+}
+
+## [void] fill-miniCal $cell $color $brightness $font
+function fill-miniCal {
+    param ($cell, $color, $brightness, $font)
+    $cell.Shape.Fill.BackColor.ObjectThemeColor = [int]$color
+    $cell.Shape.Fill.BackColor.Brightness = [single]$brightness
+    $cell.Shape.Fill.Solid()
+    $cell.Shape.TextFrame.TextRange.Font.Color.ObjectThemeColor = [int]$font
 }

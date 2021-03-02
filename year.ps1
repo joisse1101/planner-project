@@ -16,7 +16,10 @@ $labels = $divs[1], $divs[2], $divs[3], $divs[4]
 
 $slide = $presentation.Slides.AddSlide($sPos, $layouts.Item(7))
 $slide.Name = $sName
-for ($y = $year; $y -le ($year + $layers); $y++) {    
+
+$holIdx, $currHols = Get-holIdx 1 1 $year $hols
+for ($y = $year; $y -le ($year + $layers); $y++) {  
+      
     $title = $slide.Shapes(1)
     $title.TextFrame.TextRange.Text = [string]$y + " Calendar"
     $title.Name = $sName
@@ -33,13 +36,12 @@ for ($y = $year; $y -le ($year + $layers); $y++) {
         $nLeft = $Left + (($mIdx - 1) % 3) * ((5.6 * $cm) + $hDiv)
     
         $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 5.6 * $cm, 0.5 * $cm)
-        use-BodyText $box
-        label-miniCalTitle $box $m $y
+        use-miniCalTitle $box $m $y
 
         $templates.templates.Shapes("calendar-" + $type).Copy()
         [void] $slide.Shapes.Paste()
         $cal = $slide.Shapes($slide.Shapes.Count)
-        label-miniCal $box $m $y $cal
+        use-miniCal $box $m $y $cal
 
         $row = 1
         for ($col = 1; $col -le 7; $col++) {
@@ -54,7 +56,6 @@ for ($y = $year; $y -le ($year + $layers); $y++) {
                 $row++
             }
             # Add holidays to queue
-            $holIdx = Get-holIdx $i $mIdx $y $hols
             while (($y -eq [int]$hols[$holIdx].Y) -and ($mIdx -eq [int]$hols[$holIdx].M) -and ($i -eq [int]$hols[$holIdx].D)) {
                 $currHols.Add(($hols[$holIdx].Name, $hols[$holIdx].Days, 1, $hols[$holIdx].Repeat))
                 $holIdx++
@@ -68,9 +69,8 @@ for ($y = $year; $y -le ($year + $layers); $y++) {
                 }
                 if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                     ## Mark holiday
-                    $cal.Table.Cell($row, $col + 1).Shape.Fill.BackColor.ObjectThemeColor = [int]$color
-                    $cal.Table.Cell($row, $col + 1).Shape.Fill.BackColor.Brightness = [single]$brightness
-                    $cal.Table.Cell($row, $col + 1).Shape.TextFrame.TextRange.Font.Color.ObjectThemeColor = [int]$font
+                    $cell = $cal.Table.Cell($row, $col + 1)
+                    fill-miniCal $cell $color $brightness $font
                     $hol[1] = [int]$hol[1] - 1
                     if ($hol[1] -eq 0) {
                         $del.Add($hol)
