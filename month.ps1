@@ -9,9 +9,12 @@ param(
 
 $labels = $divs[0], $divs[2], $divs[3], $divs[4]
 $miniCal = $templates.month
+$y = $year
+
+$holIdx, $currHols = Get-holIdx 1 $mth $year $hols
 
 for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
-    $m = $months[$mIdx-1]
+    $m = $months[$mIdx - 1]
     ## Set layout number
     $numDays = [DateTime]::DaysInMonth($year, $mIdx)
     $day_idx = ( Get-Date -Year $year -Month $mIdx -Day 1 ).DayOfWeek.value__
@@ -32,19 +35,8 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
     $lefts = New-Object System.Collections.Generic.List[int]
     foreach ($d in $days) {
         $lefts.Add($nLeft)
-
         $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 2.5 * $cm, 0.5 * $cm)
-        use-BodyText $box
-        $box.TextFrame.AutoSize = 0
-        $box.Height = 0.48 * $cm
-        $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
-        $box.TextFrame.VerticalAnchor = 3 # align middle
-        $box.Fill.BackColor.ObjectThemeColor = 5
-        $box.Fill.BackColor.Brightness = 0.6
-        $box.Line.Visible = 1
-        $box.Line.Weight = 0.75
-        $box.Line.ForeColor.ObjectThemeColor = 2
-
+        use-mthDayLabel $box
         $box.TextFrame.TextRange.Text = $d
         $box.Name = "name_" + $d
     
@@ -59,34 +51,12 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
         }
 
         $box = $slide.Shapes.AddTextbox(1, $lefts[$day_idx], $nTop, 2.5 * $cm, 3 * $cm)
-        $box.TextFrame.AutoSize = 0
-        $box.TextFrame.TextRange.Font.Size = 9
-        $box.TextFrame.TextRange.Font.Bold = 1
-        $box.TextFrame.TextRange.ParagraphFormat.Alignment = 1 # align left
-        $box.TextFrame.VerticalAnchor = 1 # align top
+        use-mthDateLabel $box
         $box.TextFrame.TextRange.Text = [string]$d
         $box.Name = "day_" + $d
 
         # Insert holiday
         # Add holidays to queue
-        while (($y -ge [int]$hols[$holIdx].Y)) {
-            if ($y -gt [int]$hols[$holIdx].Y) {
-                $holIdx++
-            }
-            elseif ($y -eq [int]$hols[$holIdx].Y) {
-                if ($mIdx -gt [int]$hols[$holIdx].M) {
-                    $holIdx++
-                }
-                elseif ($mIdx -eq [int]$hols[$holIdx].M) {
-                    if ($d -gt [int]$hols[$holIdx].D) {
-                        $holIdx++
-                    }
-                    else { break }
-                }
-                else { break }
-            }
-            else { break }
-        }
         while (($y -eq [int]$hols[$holIdx].Y) -and ($mIdx -eq [int]$hols[$holIdx].M) -and ($d -eq [int]$hols[$holIdx].D)) {
             $currHols.Add(($hols[$holIdx].Name, $hols[$holIdx].Days, 1, $hols[$holIdx].Days, $hols[$holIdx].Repeat))
             $holIdx++
@@ -101,20 +71,8 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
             if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                 ## Mark holiday
                 $box = $slide.Shapes.AddTextbox(1, $lefts[$day_idx], $hTop , 2.5 * $cm, 0.5 * $cm)
-                $box.TextFrame.AutoSize = 0
-                $box.Height = 0.5 * $cm
-                $box.TextFrame.TextRange.Font.Size = 6
-                $box.TextFrame.TextRange.Font.Bold = 1
-                $box.TextFrame.MarginBottom = 1
-                $box.TextFrame.MarginTop = 1
-                $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
-                $box.TextFrame.VerticalAnchor = 3 # align middle
-                $box.Fill.BackColor.ObjectThemeColor = 5
-                $box.Fill.BackColor.Brightness = 0.6
-                $box.Line.Visible = 1
-                $box.Line.Weight = 1
-                $box.Line.ForeColor.ObjectThemeColor = 5
-                $box.Line.ForeColor.Brightness = 0.6
+                $box.TextFrame.AutoSize = 0                
+                use-mthHolLabel $box                
                 $box.TextFrame.TextRange.Text = $hol[0].ToUpper()
                 if ($hol[3] -gt 1) { [void] $box.TextFrame.TextRange.InsertAfter( " " + "D-" + [string]([int]$hol[3] - [int]$hol[1] + 1)) }
                 $box.Name = "hol_" + $hol[0].ToUpper()
@@ -154,14 +112,14 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
     }
 
     $y = $year        
-    for ($n = ($mIdx+1); $n -le ($mIdx + $cals); $n++) {
+    for ($n = ($mIdx + 1); $n -le ($mIdx + $cals); $n++) {
         if ($n -eq 13) { $y++ }
-        $miniCal.Shapes("mini_" + $months[($n-1) % 12] + "_" + $y).Copy()
+        $miniCal.Shapes("mini_" + $months[($n - 1) % 12] + "_" + $y).Copy()
         $box = $slide.Shapes.Paste()
         $box.Top = $nTop
         [double]$box.Left = [double]$nLeft
 
-        $miniCal.Shapes("mini_" + $months[($n-1) % 12] + "_" + $y + "_cal").Copy()
+        $miniCal.Shapes("mini_" + $months[($n - 1) % 12] + "_" + $y + "_cal").Copy()
         $cal = $slide.Shapes.Paste()
         $cal.Top = $nTop + $box.Height
         [double]$cal.Left = [double]$nLeft
