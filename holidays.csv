@@ -54,11 +54,11 @@ Y,M,D,Name,Days,Repeat,Note
 2022,4,16,Holy Saturday,1,1,Saturday before Easter
 2022,4,17,Easter,1,1,Sunday following the paschal full moon date
 2022,5,1,Labour Day,1,1,
-2022,6,5,Pentecost,1,1,Sunday 50 day after Easter (7 weeks)
+2022,5,2,Hari Raya Puasa,1,1,Manually Update
 2022,5,6,Vesak Day,1,1,Manually Update
 2022,5,8,Mother's Day,1,1,Second Sunday of May
-2022,5,2,Hari Raya Puasa,1,1,Manually Update
 2022,5,26,Ascension Day,1,1,40 days after Easter
+2022,6,5,Pentecost,1,1,Sunday 50 day after Easter (7 weeks)
 2022,7,9,Hari Raya Haji,2,1,Manually Update
 2022,8,1,Mum's Birthday,1,1,
 2022,8,9,National Day,1,1,
