@@ -7,7 +7,7 @@ Y,M,D,Name,Days,Repeat,Note
 2021,2,12,Auntie Grace's Birthday,1,1,
 2021,2,12,Chinese New Year,15,1,Manually Update
 2021,2,17,Ash Wednesday,1,1,First day of Lent (46 days before Easter)
-2021,2,18,Lent,39,1,Every day except Sunday
+2021,2,18,Lent,40,1,Every day except Sunday
 2021,3,10,Gege's Birthday,1,1,
 2021,3,14,Mothering Sunday,1,1,Fourth Sunday of Lent
 2021,3,25,Annunciation,1,1,
@@ -41,7 +41,7 @@ Y,M,D,Name,Days,Repeat,Note
 2022,2,8,Happy Birthday,1,1,
 2022,2,12,Auntie Grace's Birthday,1,1,
 2022,3,2,Ash Wednesday,1,1,First day of Lent (46 days before Easter)
-2022,3,3,Lent,39,1,Every day except Sunday
+2022,3,2,Lent,40,1,Every day except Sunday
 2022,3,10,Gege's Birthday,1,1,
 2022,3,25,Annunciation,1,1,
 2022,3,27,Mothering Sunday,1,1,Fourth Sunday of Lent
@@ -54,16 +54,16 @@ Y,M,D,Name,Days,Repeat,Note
 2022,4,16,Holy Saturday,1,1,Saturday before Easter
 2022,4,17,Easter,1,1,Sunday following the paschal full moon date
 2022,5,1,Labour Day,1,1,
-2022,5,2,Pentecost,1,1,Sunday 50 day after Easter (7 weeks)
+2022,6,5,Pentecost,1,1,Sunday 50 day after Easter (7 weeks)
 2022,5,6,Vesak Day,1,1,Manually Update
 2022,5,8,Mother's Day,1,1,Second Sunday of May
-2022,5,13,Hari Raya Puasa,1,1,Manually Update
+2022,5,2,Hari Raya Puasa,1,1,Manually Update
 2022,5,26,Ascension Day,1,1,40 days after Easter
-2022,7,10,Hari Raya Haji,2,1,Manually Update
+2022,7,9,Hari Raya Haji,2,1,Manually Update
 2022,8,1,Mum's Birthday,1,1,
 2022,8,9,National Day,1,1,
 2022,10,24,Deepavali,1,1,Manually Update
 2022,11,1,All Saint's Day,1,1,
-2022,11,28,Advent Sunday,4,7,Starts 4 Sundays before Christmas
+2022,11,27,Advent Sunday,4,7,Starts 4 Sundays before Christmas
 2022,12,25,Christmas,1,1,
 2022,12,31,New Year's Eve,1,1,
