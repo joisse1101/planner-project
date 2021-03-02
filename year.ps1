@@ -92,14 +92,6 @@ for ($y = $year; $y -le ($year + $layers); $y++) {
 
     ## Insert divider labels
     if ($div) {
-        $nTop = 0.35 * $cm
-        $nLeft = 20 * $cm
-        foreach ($l in $labels) {
-            $box = $slide.Shapes.AddTextbox(5, $nLeft, $nTop, 0.75 * $cm, 7.25 * $cm) # vertical textbox
-            use-DivText $box $title
-            $box.TextFrame.TextRange.Text = $l
-            $box.Name = "div_" + $l
-            $nTop = $nTop + $box.Height
-        }
+        Add-divs $slide $title $labels
     }
 }
