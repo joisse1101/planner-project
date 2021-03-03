@@ -152,6 +152,7 @@ function use-dayHolLabel {
     use-BodyText $box
     $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
     $box.TextFrame.VerticalAnchor = 3 # align middle
+    $box.Fill.Solid()
     $box.Fill.BackColor.ObjectThemeColor = 7
     $box.Fill.BackColor.Brightness = 0.6
     $box.Line.Visible = 1
