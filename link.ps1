@@ -22,19 +22,21 @@ foreach ($p in $prefixes) {
 
 Write-Output "Working on years"
 ## Hyperlinking yr_$year slide
-$slide = $presentation.Slides("yr_" + $year)
-$labels = 1,2,3,4
-## hyperlinking months
-foreach ($m in $months) {
-    try { $link = $presentation.Slides("mth_" + $m) }
-    catch { Continue }
-    $target = $slide.Shapes.Range( (("mini_" + $m + "_" + $year), ("mini_" + $m + "_" + $year + "_cal")) )
-    Link $target $link
-}
-## hyperlinking divs
-foreach ($l in $labels) {
-    $target = $slide.Shapes("div_" + $divs[$l])
-    Link $target $firsts[$l]
+for ($i = 0; $i -le 1; $i++) {
+    $slide = $presentation.Slides("yr_" + ($year+$i))
+    $labels = 1,2,3,4
+    ## hyperlinking months
+    foreach ($m in $months) {
+        try { $link = $presentation.Slides("mth_" + $m) }
+        catch { Continue }
+        $target = $slide.Shapes.Range( (("mini_" + $m + "_" + $year), ("mini_" + $m + "_" + $year + "_cal")) )
+        Link $target $link
+    }
+    ## hyperlinking divs
+    foreach ($l in $labels) {
+        $target = $slide.Shapes("div_" + $divs[$l])
+        Link $target $firsts[$l]
+    }
 }
 
 Write-Output "Working on months"
