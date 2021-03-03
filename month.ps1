@@ -30,8 +30,8 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
     $title.Name = $slide.Name
 
     ## Insert day titles
-    $nTop = $title.Top + $title.Height + $cm / 2
-    $nLeft = $title.Left + 0.25 * $cm
+    $nTop = $title.Top + $title.Height + 0.5 * $cm
+    $nLeft = $title.Left - 0.25 * $cm
     $lefts = New-Object System.Collections.Generic.List[int]
     foreach ($d in $days) {
         $lefts.Add($nLeft)
@@ -84,7 +84,7 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
                 $box.Top = $hTop
                 $hol[1] = [int]$hol[1] - 1
 
-                $hTop = $hTop + $box.Height + 0.1 * $cm
+                $hTop = $hTop + $box.Height + 0.05 * $cm
                 if ($hol[1] -eq 0) {
                     $del.Add($hol)
                 }
@@ -102,14 +102,14 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
     }
     
     ## Insert calender minis
-    $nTop = $nTop + 4 * $cm
+    $nTop = $nTop + 3.5 * $cm
     $nLeft = $title.Left
-    $div = ($title.Width - 5.6 * $cm * 3) / 2
+    $div = ($title.Width - 5.25 * $cm * 3) / 2
     $cals = 3
     if ($layNum -gt 1 ) {
         $cals = 2
         $nTop = $nTop - 3 * $cm
-        $nLeft = $nLeft + 5.6 * $cm + $div
+        $nLeft = $nLeft + 5.25 * $cm + $div
     }
 
     $yCal = $y
