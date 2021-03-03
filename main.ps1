@@ -1,8 +1,15 @@
 ﻿## Initialize planner
-$application = New-Object -ComObject powerpoint.application
-$ppt = $PSScriptRoot + "\planner.pptx"
-$presentation = $application.Presentations.Open($ppt)
-$templates = @{ templates = $presentation.Slides("templates_stickers"); }
+if (1) {
+    $application = New-Object -ComObject powerpoint.application
+    $ppt = $PSScriptRoot + "\planner.pptx"
+    $presentation = $application.Presentations.Open($ppt)
+    $templates = @{ templates = $presentation.Slides("templates_stickers"); }
+}
+else {
+    $application = New-Object -ComObject powerpoint.application
+    $presentation = $application.Presentations[$application.Presentations.Count]
+    $templates = @{ templates = $presentation.Slides("templates_stickers"); }
+}
 
 ## Import holidays.csv
 $csv = $PSScriptRoot + "\holidays.csv"
