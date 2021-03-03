@@ -10,7 +10,7 @@ param(
 . ".\gen-functions.ps1"
 . ".\style-functions.ps1"
 
-$colors = @{"year" = (1,0,14); "month" = (5, 0.6, 1); "week" = (6, 0.6, 1); "day" = (7, 0.6, 1) }
+$colors = @{"year" = (16,-0.25,1); "month" = (5, 0.6, 1); "week" = (6, 0.6, 1); "day" = (7, 0.6, 1) }
 $color, $brightness, $font = $colors[$type]
 $labels = $divs[1], $divs[2], $divs[3], $divs[4]
 
@@ -24,18 +24,18 @@ for ($y = $year; $y -le ($year + $layers); $y++) {
     $title.TextFrame.TextRange.Text = [string]$y + " Calendar"
     $title.Name = $sName
 
-    $Top = $title.Top + $title.Height + 0.35 * $cm
+    $Top = $title.Top + $title.Height
     $Left = $title.Left
-    $vDiv = ((26 - (5.6 * 4)) / 3) * $cm
-    $hDiv = ((18 - (5.6 * 3)) / 2) * $cm
+    $vDiv = ((46 - 3 - (10 * 4)) / 3) * 0.5 * $cm
+    $hDiv = ((34 - (10.5 * 3)) / 2) * 0.5 * $cm
 
     for ($mIdx = 1; $mIdx -le $months.Count; $mIdx++) {
         $m = $months[$mIdx - 1]
 
-        $nTop = $Top + [Math]::Floor(($mIdx - 1) / 3) * (5.6 * $cm + $vDiv)
-        $nLeft = $Left + (($mIdx - 1) % 3) * ((5.6 * $cm) + $hDiv)
+        $nTop = $Top + [Math]::Floor(($mIdx - 1) / 3) * (10 * 0.5 * $cm + $vDiv)
+        $nLeft = $Left + (($mIdx - 1) % 3) * (( 10.5 * 0.5 * $cm) + $hDiv)
     
-        $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 5.6 * $cm, 0.5 * $cm)
+        $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 10.5 * 0.5 * $cm, 0.5 * $cm)
         use-miniCalTitle $box $m $y
 
         $templates.templates.Shapes("calendar-" + $type).Copy()
