@@ -30,7 +30,7 @@ while ($y -le $year) {
     $x, $mCal, $yCal = AddDMY $d $mIdx $y 6
 
     $nTop = $title.Top
-    $nLeft = $title.Left + $title.Width + 0.75 * $cm
+    $nLeft = $title.Left + $title.Width + 0.5 * $cm
     $miniCal.Shapes("mini_" + $months[$mCal - 1] + "_" + $yCal).Copy()
     $box = $slide.Shapes.Paste()
     [double]$box.Top = [double]$nTop
@@ -44,7 +44,7 @@ while ($y -le $year) {
     for ($i = 0; $i -lt $days.Count; $i++) {
         $m = $months[$mIdx-1]
         $nTop = $title.Top + 5.5 * $cm + ($i % 4) * 4.5 * $cm
-        $nLeft = $title.Left + [math]::Floor($i / 4) * 8.75 * $cm
+        $nLeft = $title.Left + [math]::Floor($i / 4) * 9.25 * $cm
 
         ## Insert day names
         $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 4 * $cm, 0.5 * $cm)
@@ -53,7 +53,7 @@ while ($y -le $year) {
         $box.Name = "day_" + [string]$days[$i]
 
         ## Insert dates
-        $box = $slide.Shapes.AddTextbox(1, $box.Left + $box.Width, $nTop, 4.25 * $cm, 0.5 * $cm)
+        $box = $slide.Shapes.AddTextbox(1, $box.Left + $box.Width, $nTop, 4.75 * $cm, 0.5 * $cm)
         use-wkDateLabel $box $title
         $box.TextFrame.TextRange.Text = [string]$d + $m.Substring(0,3)
         $box.Name = "date_" + [string]$d + $m
@@ -73,7 +73,7 @@ while ($y -le $year) {
             }
             if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                 ## Mark holiday
-                $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.25 * $cm, 0.5 * $cm)
+                $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.75 * $cm, 0.5 * $cm)
                 use-wkHolLabel $box
                 $box.TextFrame.TextRange.Text = $hol[0].ToUpper()
                 $box.Name = "hol_" + $hol[0].ToUpper()
@@ -106,9 +106,9 @@ while ($y -le $year) {
 
     ## Insert habit tracker
     $nTop = $title.Top + 19.5 * $cm
-    $nLeft = $title.Left + 8.75 * $cm
+    $nLeft = $title.Left + 9.25 * $cm
 
-    $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 8.25 * $cm, 0.5 * $cm)
+    $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 8.75 * $cm, 0.5 * $cm)
     use-wkTrackerLabel $box
     $box.TextFrame.TextRange.Text = "Habit Tracker"
     $box.Name = "habit_title"

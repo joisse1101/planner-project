@@ -16,6 +16,8 @@ $csv = $PSScriptRoot + "\holidays.csv"
 $hols = Import-Csv $csv
 
 ## Default data
+. ".\gen-functions.ps1"
+. ".\style-functions.ps1"
 $cm = $presentation.SlideMaster.Shapes.Title.Left
 $layouts = $presentation.SlideMaster.CustomLayouts
 $days = "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
@@ -50,12 +52,9 @@ $templates.month.delete()
 $templates.Remove('month')
 $templates.week.delete()
 $templates.Remove('week')
-while (1) {
-    try { $templates.templates.Shapes[2].delete() }
-    catch { break }
-}
+
 $labels = $divs[0], $divs[1], $divs[2], $divs[3]
-Add-divs $template.templates, $presentation.SlideMaster.Shapes.Title, $labels
+Add-divs $templates.templates $presentation.SlideMaster.Shapes.Title $labels
 
 ## Create hyperlinks between pages
 .\link.ps1 -year:$year -mth:$mth -day:$day

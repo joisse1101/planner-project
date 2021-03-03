@@ -30,7 +30,7 @@ while ($y -le $year) {
         if ($i -eq 6) { [void] $title.TextFrame.TextRange.InsertAfter(" - " + [string]$d + $m) }
         ## Insert date
         $nTop = $cm
-        $nLeft = $cm + ($i - 5) * 8.5 * $cm
+        $nLeft = $cm + ($i - 5) * 9 * $cm
         $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 1.5 * $cm, 0.5 * $cm)
         use-dayLabel $box
         $box.TextFrame.TextRange.Text = [string]$d + " " + $m.Substring(0, 3)
@@ -43,7 +43,7 @@ while ($y -le $year) {
         $box.Name = "day_" + [string]$d + "_" + $m
 
         ## Insert type
-        $box = $slide.Shapes.AddTextbox(1, $box.Left + $box.Width, $nTop, 4 * $cm, 0.75 * $cm)
+        $box = $slide.Shapes.AddTextbox(1, $box.Left + $box.Width, $nTop, 4.5 * $cm, 0.75 * $cm)
         use-dayTypeLabel $box $title
         if ($day_idx -eq 0) { $box.TextFrame.TextRange.Text = $dType[0] }
         else { $box.TextFrame.TextRange.Text = $dType[1] }
@@ -65,7 +65,7 @@ while ($y -le $year) {
             }
             if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                 ## Mark holiday
-                $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.5 * $cm, 0.495 * $cm)
+                $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 9 * $cm, 0.495 * $cm)
                 use-dayHolLabel $box
                 $box.TextFrame.TextRange.Text = $hol[0].ToUpper()
                 $box.Name = "hol_" + $hol[0].ToUpper()

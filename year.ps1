@@ -27,15 +27,15 @@ for ($y = $year; $y -le ($year + $layers); $y++) {
     $Top = $title.Top + $title.Height
     $Left = $title.Left
     $vDiv = ((46 - 3 - (10 * 4)) / 3) * 0.5 * $cm
-    $hDiv = ((34 - (10.5 * 3)) / 2) * 0.5 * $cm
+    $hDiv = ((36 - (11 * 3)) / 2) * 0.5 * $cm
 
     for ($mIdx = 1; $mIdx -le $months.Count; $mIdx++) {
         $m = $months[$mIdx - 1]
 
         $nTop = $Top + [Math]::Floor(($mIdx - 1) / 3) * (10 * 0.5 * $cm + $vDiv)
-        $nLeft = $Left + (($mIdx - 1) % 3) * (( 10.5 * 0.5 * $cm) + $hDiv)
+        $nLeft = $Left + (($mIdx - 1) % 3) * (( 11 * 0.5 * $cm) + $hDiv)
     
-        $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 10.5 * 0.5 * $cm, 0.5 * $cm)
+        $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 11 * 0.5 * $cm, 0.5 * $cm)
         use-miniCalTitle $box $m $y
 
         $templates.templates.Shapes("calendar-" + $type).Copy()

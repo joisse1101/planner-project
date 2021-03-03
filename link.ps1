@@ -189,8 +189,6 @@ while ($y -le $year) {
 }
 
 Write-Output "Working on sticker page"
-$labels = $divs[0], $divs[1], $divs[2], $divs[3]
-Add-divs $templates.templates $presentation.SlideMaster.Shapes.Title $labels
 
 $labels = 0, 1, 2, 3
 $slide = $templates.templates

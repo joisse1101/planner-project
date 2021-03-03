@@ -31,7 +31,7 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
 
     ## Insert day titles
     $nTop = $title.Top + $title.Height + 0.5 * $cm
-    $nLeft = $title.Left - 0.25 * $cm
+    $nLeft = $title.Left + 0.25 * $cm
     $lefts = New-Object System.Collections.Generic.List[int]
     foreach ($d in $days) {
         $lefts.Add($nLeft)
@@ -104,12 +104,12 @@ for ($mIdx = $mth; $mIdx -le $months.Count; $mIdx++) {
     ## Insert calender minis
     $nTop = $nTop + 3.5 * $cm
     $nLeft = $title.Left
-    $div = ($title.Width - 5.25 * $cm * 3) / 2
+    $div = ($title.Width - 5.5 * $cm * 3) / 2
     $cals = 3
     if ($layNum -gt 1 ) {
         $cals = 2
         $nTop = $nTop - 3 * $cm
-        $nLeft = $nLeft + 5.25 * $cm + $div
+        $nLeft = $nLeft + 5.5 * $cm + $div
     }
 
     $yCal = $y

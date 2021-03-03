@@ -70,7 +70,7 @@ function Get-holIdx {
 function Add-divs {
     param($slide, $title, $labels)
     $nTop = 0.25 * $cm
-    $nLeft = 19 * $cm
+    $nLeft = 20 * $cm
     foreach ($l in $labels) {
         $box = $slide.Shapes.AddTextbox(5, $nLeft, $nTop, 0.75 * $cm, 12.25 * 0.5 * $cm) # vertical textbox
         use-DivText $box $title    
