@@ -60,7 +60,7 @@ function use-mthDayLabel {
     param ($box)
     use-BodyText $box
     $box.TextFrame.AutoSize = 0
-    $box.Height = 0.48 * $cm
+    $box.Height = 0.475 * $cm
     $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
     $box.TextFrame.VerticalAnchor = 3 # align middle
     $box.Fill.Solid()
@@ -120,9 +120,10 @@ function use-wkHolLabel {
 function use-wkTrackerLabel {
     param($box)
     use-BodyText $box
-    $box.Height = 0.75 * $cm
+    $box.Height = 0.5 * $cm
     $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
-    $box.TextFrame.VerticalAnchor = 3 # align middle
+    $box.TextFrame.VerticalAnchor = 1 # align top
+    $box.TextFrame.MarginTop = 0.125 * $cm
     $box.Fill.Solid()
     $box.Fill.ForeColor.ObjectThemeColor = 6
     $box.Fill.ForeColor.Brightness = 0.6
@@ -153,11 +154,11 @@ function use-dayHolLabel {
     $box.TextFrame.TextRange.ParagraphFormat.Alignment = 2 # align center
     $box.TextFrame.VerticalAnchor = 3 # align middle
     $box.Fill.Solid()
-    $box.Fill.BackColor.ObjectThemeColor = 7
-    $box.Fill.BackColor.Brightness = 0.6
+    $box.Fill.ForeColor.ObjectThemeColor = 7
+    $box.Fill.ForeColor.Brightness = 0.8
     $box.Line.Visible = 1
     $box.Line.Weight = 1
     $box.Line.ForeColor.ObjectThemeColor = 7
-    $box.Line.ForeColor.Brightness = 0.6
+    $box.Line.ForeColor.Brightness = 0.8
     $box.ZOrder(1)
 }

@@ -27,14 +27,10 @@ while ($y -le $year) {
     $title.Name = $slide.Name
     
     ## Insert mini calendar
-    if (($d + 6) -gt $numDays) { 
-        $mCal, $yCal = ($mIdx + 1), $y
-        if ($mCal -eq 13) { $mCal, $yCal = 1, ($y + 1)}
-    }
-    else { $mCal, $yCal = $mIdx, $y }
+    $x, $mCal, $yCal = AddDMY $d $mIdx $y 6
 
     $nTop = $title.Top
-    $nLeft = $title.Left + $title.Width + 0.05 * $cm
+    $nLeft = $title.Left + $title.Width + 0.75 * $cm
     $miniCal.Shapes("mini_" + $months[$mCal - 1] + "_" + $yCal).Copy()
     $box = $slide.Shapes.Paste()
     [double]$box.Top = [double]$nTop
@@ -47,8 +43,8 @@ while ($y -le $year) {
 
     for ($i = 0; $i -lt $days.Count; $i++) {
         $m = $months[$mIdx-1]
-        $nTop = $title.Top + 6.75 * $cm + ($i % 4) * 5 * $cm
-        $nLeft = $title.Left + [math]::Floor($i / 4) * 9.25 * $cm
+        $nTop = $title.Top + 5.5 * $cm + ($i % 4) * 4.5 * $cm
+        $nLeft = $title.Left + [math]::Floor($i / 4) * 8.75 * $cm
 
         ## Insert day names
         $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 4 * $cm, 0.5 * $cm)
@@ -57,7 +53,7 @@ while ($y -le $year) {
         $box.Name = "day_" + [string]$days[$i]
 
         ## Insert dates
-        $box = $slide.Shapes.AddTextbox(1, $nLeft + 6.25 * $cm, $nTop, 2.5 * $cm, 0.5 * $cm)
+        $box = $slide.Shapes.AddTextbox(1, $box.Left + $box.Width, $nTop, 4.25 * $cm, 0.5 * $cm)
         use-wkDateLabel $box $title
         $box.TextFrame.TextRange.Text = [string]$d + $m.Substring(0,3)
         $box.Name = "date_" + [string]$d + $m
@@ -69,7 +65,7 @@ while ($y -le $year) {
             $holIdx++
         }
         # Mark holidays
-        $hTop = $nTop + 0.25 * $cm
+        $hTop = $nTop + 0.5 * $cm
         foreach ($hol in $currHols) {
             # skip Sundays for Lent
             if (($day_idx -eq 0) -and ($hol[0] -eq "Lent")) {
@@ -77,7 +73,7 @@ while ($y -le $year) {
             }
             if ($hol[1] -ge 1 -and $hol[2] -eq 1) {
                 ## Mark holiday
-                $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.75 * $cm, 0.5 * $cm)
+                $box = $slide.Shapes.AddTextbox(1, $nLeft, $hTop, 8.25 * $cm, 0.5 * $cm)
                 use-wkHolLabel $box
                 $box.TextFrame.TextRange.Text = $hol[0].ToUpper()
                 $box.Name = "hol_" + $hol[0].ToUpper()
@@ -86,7 +82,7 @@ while ($y -le $year) {
                 $box.ZOrder(1)
                 $hol[1] = [int]$hol[1] - 1
 
-                $hTop = $hTop + $box.Height + 0.1 * $cm
+                $hTop = $hTop + $box.Height + 0.05 * $cm
                 if ($hol[1] -eq 0) {
                     $del.Add($hol)
                 }
@@ -109,10 +105,10 @@ while ($y -le $year) {
     }
 
     ## Insert habit tracker
-    $nTop = $title.Top + 21.5 * $cm
-    $nLeft = $title.Left + 9.25 * $cm
+    $nTop = $title.Top + 19.5 * $cm
+    $nLeft = $title.Left + 8.75 * $cm
 
-    $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 8.75 * $cm, 0.75 * $cm)
+    $box = $slide.Shapes.AddTextbox(1, $nLeft, $nTop, 8.25 * $cm, 0.5 * $cm)
     use-wkTrackerLabel $box
     $box.TextFrame.TextRange.Text = "Habit Tracker"
     $box.Name = "habit_title"
