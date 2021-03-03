@@ -23,13 +23,14 @@ foreach ($p in $prefixes) {
 Write-Output "Working on years"
 ## Hyperlinking yr_$year slide
 for ($i = 0; $i -le 1; $i++) {
-    $slide = $presentation.Slides("yr_" + ($year+$i))
+    $slide = $presentation.Slides("yr_" + [string]($year + $i))
     $labels = 1,2,3,4
     ## hyperlinking months
     foreach ($m in $months) {
         try { $link = $presentation.Slides("mth_" + $m) }
         catch { Continue }
-        $target = $slide.Shapes.Range( (("mini_" + $m + "_" + $year), ("mini_" + $m + "_" + $year + "_cal")) )
+        try { $target = $slide.Shapes.Range( (("mini_" + $m + "_" + ($year + $i)), ("mini_" + $m + "_" + ($year + $i) + "_cal")) ) }
+        catch { Continue }
         Link $target $link
     }
     ## hyperlinking divs
@@ -185,4 +186,15 @@ while ($y -le $year) {
         Link $target $firsts[$l]
     }
 
+}
+
+Write-Output "Working on sticker page"
+$labels = $divs[0], $divs[1], $divs[2], $divs[3]
+Add-divs $templates.templates $presentation.SlideMaster.Shapes.Title $labels
+
+$labels = 0, 1, 2, 3
+$slide = $templates.templates
+foreach ($l in $labels) {
+    $target = $slide.Shapes("div_" + $divs[$l])
+    Link $target $firsts[$l]
 }

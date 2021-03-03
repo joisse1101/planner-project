@@ -43,8 +43,7 @@ $templates = $templates + @{ week = $presentation.Slides("templates_miniCal_week
 .\week.ps1 -year:$year -mth:$mth -day:$day -sPos:($presentation.Slides.Count - $templates.Count + 1)
 .\days.ps1 -year:$year -mth:$mth -day:$day -sPos:($presentation.Slides.Count - $templates.Count + 1)
 
-## Create hyperlinks between pages
-.\link.ps1 -year:$year -mth:$mth -day:$day
+
 
 ## Clear templates
 $templates.month.delete()
@@ -55,3 +54,8 @@ while (1) {
     try { $templates.templates.Shapes[2].delete() }
     catch { break }
 }
+$labels = $divs[0], $divs[1], $divs[2], $divs[3]
+Add-divs $template.templates, $presentation.SlideMaster.Shapes.Title, $labels
+
+## Create hyperlinks between pages
+.\link.ps1 -year:$year -mth:$mth -day:$day
